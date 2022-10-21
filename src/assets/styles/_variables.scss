@@ -1,0 +1,105 @@
+@import 'colors';
+
+// Global Settings
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+nav {
+  list-style: none;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: 'Houschka Pro', sans-serif;
+  font-size: 16px;
+}
+
+//Structure
+.flex {
+  display: flex;
+}
+
+.cols {
+  flex-direction: column;
+}
+
+.jcc {
+  justify-content: center;
+}
+.jcsb {
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.vcenter {
+  align-items: center;
+}
+
+//Paddings
+.gap-10 {
+  gap: 0.625rem;
+}
+.gap-12 {
+  gap: 0.75rem;
+}
+.gap-15 {
+  gap: 0.9375rem;
+}
+.gap-30 {
+  gap: 1.875rem;
+}
+
+.pb-15 {
+  padding-bottom: 0.9375rem;
+}
+.mb-15 {
+  margin-bottom: 0.9375rem;
+}
+.pb-30 {
+  padding-bottom: 1.875rem;
+}
+.mb-30 {
+  margin-bottom: 1.875rem;
+}
+.pb-45 {
+  padding-bottom: 2.8125rem;
+}
+.mb-45 {
+  margin-bottom: 2.8125rem;
+}
+
+//Animations
+$transition: ease-in-out 250ms;
+
+//Misc
+.rounded-4 {
+  border-radius: 4px;
+}
+
+.rounded-3 {
+  border-radius: 3px;
+}
+
+.rounded-2 {
+  border-radius: 2px;
+}
+
+.invert-shadow {
+  box-shadow: inset 0px 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+img,
+svg {
+  max-width: fit-content;
+  width: 100%;
+  height: auto;
+}
