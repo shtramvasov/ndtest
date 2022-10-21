@@ -1,0 +1,41 @@
+button,
+.button {
+  font-family: 'Houschka Pro', sans-serif;
+  cursor: pointer;
+  border: none;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: $blue;
+  background-color: $super-light;
+  border-radius: 3px;
+  width: 50px;
+  height: 50px;
+  transition: $transition;
+
+  &:hover {
+    background-color: $light;
+  }
+
+  &:active {
+    background-color: $light;
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  &:focus {
+    color: $white;
+    background-color: $dark;
+    cursor: auto;
+  }
+
+  &:disabled {
+    color: $light;
+    background-color: $middle-dark;
+  }
+}
+
+@media (max-width: $screen-small) {
+  button, .button {
+    width: 40px;
+    height: 40px;
+  }
+}
