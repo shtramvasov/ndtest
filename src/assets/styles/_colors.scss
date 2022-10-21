@@ -1,0 +1,82 @@
+// Colors
+$white: #FFFFFF;
+$red: #EB3737;
+$red-dark: #C52020;
+$blue: #0066B3;
+$dark: #4C5A79;
+$middle-dark: #9DB0BF;
+$light: #E2E8F3;
+$middle-light: #CDD5E2;
+$super-light: #F0F4FC;
+$super-light-85: rgba(240, 244, 252, 0.85);
+
+// Color Classes
+.white {
+  background-color: $white;
+  &--text {
+    color: $white;
+  }
+}
+
+.red {
+  background-color: $red;
+  &--text {
+    color: $red;
+  }
+
+  &__dark {
+    background-color: $red-dark;
+    &--text {
+      color: $red-dark;
+    }
+  }
+}
+
+.blue {
+  background-color: $blue;
+  &--text {
+    color: $blue;
+  }
+}
+
+.dark {
+  background-color: $dark;
+  &--text {
+    color: $dark;
+  }
+
+  &__middle {
+    background-color: $middle-dark;
+    &--text {
+      color: $middle-dark;
+    }
+  }
+}
+
+.light {
+  background-color: $light;
+  &--text {
+    color: $light;
+  }
+
+  &__middle {
+    background-color: $middle-light;
+    &--text {
+      color: $middle-light;
+    }
+  }
+
+  &__super {
+    background-color: $super-light;
+    &--text {
+      color: $super-light;
+    }
+  }
+
+  &__super85 {
+    background-color: $super-light-85;
+    &--text {
+      color: $super-light-85;
+    }
+  }
+}
