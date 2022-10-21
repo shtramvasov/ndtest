@@ -1,5 +1,3 @@
-// Typography 
-
 //Fonts
 @font-face {
   font-family: 'FuturaPT';
@@ -19,4 +17,56 @@
   font-family: 'HouschkaPro';
   src: local('HouschkaPro-ExtraBold'), url('/src/assets/fonts/HouschkaPro-ExtraBold.ttf') format('truetype');
   font-weight: 800;
+}
+
+// Typography 
+
+h1 {
+  font-family: 'FuturaPT', sans-serif;
+  font-size: 2.1875rem; // 35px
+  line-height: 2.5rem; // 40px
+}
+
+h5 {
+  font-family: 'Houschka Pro', sans-serif;
+  font-size: 0.875rem; // 14px
+  line-height: 1.375rem; // 22px
+  font-weight: 800;
+}
+
+p {
+  font-family: 'Houschka Pro', sans-serif;
+  font-size: 1.125rem; // 18px
+  line-height: 1.75rem; // 28px   
+
+  &.bold {
+    font-weight: 700;
+  }
+
+  &.caption {
+    font-size: 0.9375rem; // 15px
+    line-height: 1.1875rem; // 19px  
+  }
+}
+
+@media (max-width: $screen-small) {
+  h1 {
+    font-size: 2.625rem; // 42px
+    line-height: 3.125rem; // 50px  
+  }
+
+  h5 {
+    font-size: 1.125rem; // 18px
+    line-height: 1.5625rem; // 25px  
+  }
+
+  p {
+    font-size: 0.9375rem; // 15px
+    line-height: 1.5rem; // 24px  
+    
+    &.caption {
+      font-size: 0.8175rem; // 13px
+      line-height: 1.125rem; // 18px  
+    }
+  }
 }
