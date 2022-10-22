@@ -33,6 +33,10 @@ input,
     &:hover {
       background-color: $super-light;
     }
+
+    &::placeholder {
+      opacity: 0;
+    }
   }
 }
 

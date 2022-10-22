@@ -25,6 +25,11 @@ h1 {
   font-family: 'FuturaPT', sans-serif;
   font-size: 2.1875rem; // 35px
   line-height: 2.5rem; // 40px
+
+  &.mobile-size {
+    font-size: 2.625rem; // 42px
+    line-height: 3.125rem; // 50px  
+  }
 }
 
 h5 {
@@ -32,6 +37,11 @@ h5 {
   font-size: 0.875rem; // 14px
   line-height: 1.375rem; // 22px
   font-weight: 800;
+
+  &.mobile-size {
+    font-size: 1.125rem; // 18px
+    line-height: 1.5625rem; // 25px  
+  }
 }
 
 p {

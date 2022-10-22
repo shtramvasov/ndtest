@@ -33,7 +33,7 @@ html {
   justify-content: center;
 }
 .jcsb {
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .text-center {
@@ -42,6 +42,14 @@ html {
 
 .vcenter {
   align-items: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.app-wrapper {
+  padding: 1.875rem 6.25rem 3.75rem
 }
 
 //Paddings
@@ -97,9 +105,14 @@ $transition: ease-out 300ms;
   box-shadow: inset 0px 5px 10px rgba(0, 0, 0, 0.4);
 }
 
-img,
-svg {
-  max-width: fit-content;
-  width: 100%;
-  height: auto;
+@media (max-width: $screen-medium) {
+  .app-wrapper {
+      padding: 1.875rem 3.8125rem 3.75rem
+    }
+}
+
+@media (max-width: $screen-small) {
+  .app-wrapper {
+      padding: 0.75rem 0.75rem 3.75rem
+    }
 }
