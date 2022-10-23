@@ -1,12 +1,12 @@
 <template>
-  <div class="card flex rounded-4" :style="{'background-image': 'url(' + require(`@/assets/img/${img}`)}">
+  <div class="card flex rounded-4" :style="{'background-image': 'url(' + require(`@/assets/img/${preview_img_path}`)}">
     <div class="wrapper rounded-4">
       <div class="content flex cols jcsb">
         <div class="flex cols gap-12">
-          <p class="caption white--text"><span class="badge blue rounded-2">Название серии</span></p>
-          <h5 class="mobile-size white--text">Эффективное общение по телефону</h5>
+          <p class="caption white--text"><span class="badge blue rounded-2">{{ series }}</span></p>
+          <h5 class="mobile-size white--text">{{ title }}</h5>
         </div>
-        <h5 class="mobile-size white--text">21 000 ₽</h5>
+        <h5 class="mobile-size white--text">{{ cost }} {{ cost_currency }}</h5>
         <p class="arrow bold white--text">
           Подробнее
           <svg width="20" height="10" viewBox="0 0 20 10">
@@ -21,7 +21,11 @@
 
 export default {
   props: {
-    img: String,
+    preview_img_path: String,
+    title: String,
+    cost: Number,
+    cost_currency: String,
+    series: String,
   },
   }
 </script>
@@ -42,10 +46,8 @@ export default {
     .wrapper {
       background: linear-gradient(hsl(221 23 39 / 0.5),hsl(221 23 39 / 0.9));
       transform: translateY(-9rem);
-
     .content {
-      transform: translateY(7.5rem);
-
+      transform: translateY(5.5rem);
       .arrow {
         opacity: 1;
         transform: translateY(1rem);
@@ -65,10 +67,15 @@ export default {
     position: relative;
     transition: $transition;
     height: 50%;
-    transform: translateY(-2rem);
-    
+    transform: translateY(-4rem);
+
     h5 {
       text-transform: uppercase;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
     }
   
     .badge {

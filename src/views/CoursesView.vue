@@ -12,17 +12,41 @@
     </label>
     <div class="courses-content flex cols gap-15">
       <div class="flex jcsb">
-        <p class="caption dark--text">458 результатов</p>
+        <p class="caption dark--text">{{ items.length }} результатов</p>
         <div class="courses-content__sorting">
           <p class="caption dark__middle--text">Сортировать по:</p>
         </div>
       </div>
-
       <div class="cards-container flex-wrap">
-        <Card :img="'cover/pic1.jpg'"/>
-        <Card :img="'cover/pic1.jpg'"/>
-        <Card :img="'cover/pic1.jpg'"/>
-        <Card :img="'cover/pic1.jpg'"/>
+        <Card v-for="item in itemsPerPage" 
+          :key=item.id 
+          :title="item.title"
+          :preview_img_path="item.preview_img_path"
+          :cost="item.cost"
+          :cost_currency="item.cost_currency"
+          :series="item.series"
+          :img="item.preview_img_path"
+        />
+      </div>
+      <div class="flex gap-10 jcc" v-if="items.length > limit">
+        <VButtonPrevious 
+          v-show="this.limit > 3" 
+          @click.native="prevPage()"
+          :disabled="this.currentPage == 1"
+        />
+        <button 
+          v-for="page in pages" 
+          :key="page"
+          :class="{'active' : page === currentPage}"
+          @click="pageClick(page)"
+          >
+          {{ page }}
+        </button>
+        <VButtonNext 
+        v-show="this.limit > 3"
+        @click.native="nextPage()"
+        :disabled="this.currentPage == this.maxPages"
+        />
       </div>
     </div>
   </section>
@@ -30,12 +54,73 @@
 
 <script>
 import Card from '@/components/Card.vue';
-
+import axios from 'axios';
+import VButtonPrevious from '@/components/ui/vButtonPrevious.vue';
+import VButtonNext from '../components/ui/vButtonNext.vue';
 export default {
   name: 'HomeView',
   components: {
-    Card
-}
+    Card,
+    VButtonPrevious,
+    VButtonNext
+},
+  data() {
+    return { 
+      items: [],
+      currentPage: 1,
+      maxPages: Number,
+      limit: Number | 9,
+      windowWidth: window.innerWidth,
+    }
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const response = await axios.get('/API.json');
+        this.items = response.data;
+      } catch (error) {
+        console.error(error.message)
+      }
+    },
+    pageClick(page) {
+      this.currentPage = page;
+    },
+    prevPage() {
+      if(this.currentPage > 1) {
+        this.currentPage = this.currentPage - 1;
+      }
+    },
+    nextPage() {
+        this.currentPage = this.currentPage + 1;
+    },
+    onResize() {
+      this.windowWidth = window.innerWidth;
+      if (this.windowWidth <= 1366 && this.windowWidth > 768) {
+        return this.limit = 9
+      }
+      if (this.windowWidth <= 768 && this.windowWidth > 360) {
+        return this.limit = 6
+      }
+      if (this.windowWidth <= 360) {
+        return this.limit = 3
+      }
+    }
+  },
+  mounted() {
+    this.fetchData();
+    window.addEventListener('resize', this.onResize);
+  },
+  computed: {
+    pages() {
+      return this.maxPages = Math.ceil(this.items.length / this.limit);
+
+    },
+    itemsPerPage() {
+      let from = (this.currentPage - 1) * this.limit;
+      let to = from + this.limit;
+      return this.items.slice(from, to);
+    },
+  },
 }
 </script>
 <style lang="scss">

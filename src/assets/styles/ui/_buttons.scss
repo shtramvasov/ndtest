@@ -11,6 +11,9 @@ button,
   width: 50px;
   height: 50px;
   transition: $transition;
+  path {
+    fill: $blue;
+  }
 
   &:hover {
     background-color: $light;
@@ -25,11 +28,27 @@ button,
     color: $white;
     background-color: $dark;
     cursor: auto;
+    path {
+      fill: $white;
+    }
   }
 
   &:disabled {
     color: $light;
     background-color: $middle-dark;
+    cursor: auto;
+    path {
+      fill: $light;
+    }
+  }
+}
+
+.active , .active:hover {
+  color: $white;
+  background-color: $dark;
+  cursor: auto;
+  path {
+    fill: $white;
   }
 }
 
