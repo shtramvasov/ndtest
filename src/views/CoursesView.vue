@@ -28,26 +28,12 @@
           :img="item.preview_img_path"
         />
       </div>
-      <div class="flex gap-10 jcc" v-if="items.length > limit">
-        <VButtonPrevious 
-          v-show="this.limit > 3" 
-          @click.native="prevPage()"
-          :disabled="this.currentPage == 1"
-        />
-        <button 
-          v-for="page in pages" 
-          :key="page"
-          :class="{'active' : page === currentPage}"
-          @click="pageClick(page)"
-          >
-          {{ page }}
-        </button>
-        <VButtonNext 
-        v-show="this.limit > 3"
-        @click.native="nextPage()"
-        :disabled="this.currentPage == this.maxPages"
-        />
-      </div>
+      <PaginationBlock 
+        :items="items.length"
+        :limit="this.limit"
+        :currentPage="this.currentPage"
+        @pageClick="(page) => this.currentPage = page"       
+      />
     </div>
   </section>
 </template>
@@ -55,20 +41,22 @@
 <script>
 import Card from '@/components/Card.vue';
 import axios from 'axios';
-import VButtonPrevious from '@/components/ui/vButtonPrevious.vue';
-import VButtonNext from '../components/ui/vButtonNext.vue';
+import PaginationBlock from '@/components/PaginationBlock.vue';
+
 export default {
-  name: 'HomeView',
+  name: 'CoursesView',
   components: {
     Card,
-    VButtonPrevious,
-    VButtonNext
+    PaginationBlock
 },
+  mounted() {
+    this.fetchData();
+    window.addEventListener('resize', this.onResize);
+  },
   data() {
     return { 
       items: [],
       currentPage: 1,
-      maxPages: Number,
       limit: Number | 9,
       windowWidth: window.innerWidth,
     }
@@ -82,39 +70,17 @@ export default {
         console.error(error.message)
       }
     },
-    pageClick(page) {
-      this.currentPage = page;
-    },
-    prevPage() {
-      if(this.currentPage > 1) {
-        this.currentPage = this.currentPage - 1;
-      }
-    },
-    nextPage() {
-        this.currentPage = this.currentPage + 1;
-    },
     onResize() {
       this.windowWidth = window.innerWidth;
-      if (this.windowWidth <= 1366 && this.windowWidth > 768) {
+      if (this.windowWidth <= 1366 && this.windowWidth > 768) 
         return this.limit = 9
-      }
-      if (this.windowWidth <= 768 && this.windowWidth > 360) {
+      if (this.windowWidth <= 768 && this.windowWidth > 360) 
         return this.limit = 6
-      }
-      if (this.windowWidth <= 360) {
+      if (this.windowWidth <= 360) 
         return this.limit = 3
-      }
     }
   },
-  mounted() {
-    this.fetchData();
-    window.addEventListener('resize', this.onResize);
-  },
   computed: {
-    pages() {
-      return this.maxPages = Math.ceil(this.items.length / this.limit);
-
-    },
     itemsPerPage() {
       let from = (this.currentPage - 1) * this.limit;
       let to = from + this.limit;
