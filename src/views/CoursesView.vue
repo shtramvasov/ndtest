@@ -55,6 +55,8 @@ export default {
   mounted() {
     this.fetchData();
     window.addEventListener('resize', this.onResize);
+    localStorage.searchQuery ? this.searchQuery = localStorage.searchQuery : '';
+    localStorage.priceSorted ? this.priceSorted  = localStorage.priceSorted : false;
   },
   data() {
     return { 
@@ -62,9 +64,9 @@ export default {
       currentPage: 1,
       limit: Number | 9,
       windowWidth: window.innerWidth,
-      priceSorted: false,
+      priceSorted: localStorage.priceSorted,
       titleSorted: false,
-      searchQuery: '',
+      searchQuery: localStorage.searchQuery || '',
       sortByPrice: { desc: false },
       sortByTitle: { desc: false },
     }
@@ -98,12 +100,14 @@ export default {
       return this.searchedItems.slice(from, to);
     },
     searchedItems() {
-      return this.itemsHandler.filter(item => item.title.toLowerCase().includes(this.searchQuery));
+      localStorage.searchQuery = this.searchQuery;
+      return this.itemsHandler.filter(item => item.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
     },
   },
   watch: {
     'sortByPrice.desc': function() { 
       if(this.sortByPrice.desc) {
+        localStorage.priceSorted = true;
         this.items.sort((a, b) => a.cost > b.cost ? 1: -1);
       } else {
         this.items.sort((a, b) => a.cost > b.cost ? -1 : 1);
