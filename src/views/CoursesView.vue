@@ -10,12 +10,17 @@
         placeholder="Поиск по каталогу" 
       />
     </label>
-    <div class="courses-content flex cols gap-15">
+    <div class="flex cols gap-15">
       <div class="flex jcsb">
         <p class="caption dark--text">{{ items.length }} результатов</p>
-        <div class="courses-content__sorting">
-          <p class="caption dark__middle--text">Сортировать по:</p>
-        </div>
+        <VSelect 
+          :sortByPrice="this.sortByPrice"
+          :sortByTitle="this.sortByTitle"
+          :priceSorted="this.priceSorted"
+          :titleSorted="this.titleSorted"
+          @sortPrice="(desc) => {this.sortByPrice.desc = desc; this.priceSorted = true}"
+          @sortTitle="(desc) => {this.sortByTitle.desc = desc; this.titleSorted = true}"
+        />
       </div>
       <div class="cards-container flex-wrap">
         <Card v-for="item in itemsPerPage" 
@@ -42,12 +47,14 @@
 import Card from '@/components/Card.vue';
 import axios from 'axios';
 import PaginationBlock from '@/components/PaginationBlock.vue';
+import VSelect from '@/components/ui/vSelect.vue';
 
 export default {
   name: 'CoursesView',
   components: {
     Card,
-    PaginationBlock
+    PaginationBlock,
+    VSelect
 },
   mounted() {
     this.fetchData();
@@ -59,6 +66,10 @@ export default {
       currentPage: 1,
       limit: Number | 9,
       windowWidth: window.innerWidth,
+      priceSorted: false,
+      titleSorted: false,
+      sortByPrice: { desc: false },
+      sortByTitle: { desc: false },
     }
   },
   methods: {
@@ -78,7 +89,7 @@ export default {
         return this.limit = 6
       if (this.windowWidth <= 360) 
         return this.limit = 3
-    }
+    },
   },
   computed: {
     itemsPerPage() {
@@ -87,6 +98,22 @@ export default {
       return this.items.slice(from, to);
     },
   },
+  watch: {
+    'sortByPrice.desc': function (){ 
+      if(this.sortByPrice.desc) {
+        this.items.sort((a, b) => a.cost > b.cost ? 1: -1);
+      } else {
+        this.items.sort((a, b) => a.cost > b.cost ? -1 : 1);
+      }
+    },
+    'sortByTitle.desc': function (){ 
+      if(this.sortByTitle.desc) {
+        this.items.sort((a, b) => a.title > b.title ? 1: -1);
+      } else {
+        this.items.sort((a, b) => a.title > b.title ? -1 : 1);
+      }
+    },
+  }
 }
 </script>
 <style lang="scss">

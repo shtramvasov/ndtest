@@ -1,0 +1,5 @@
+<template>
+  <svg width="7" height="8" viewBox="0 0 7 8">
+    <path d="M3.5 8V1M3.5 1L1 3.5M3.5 1L6 3.5" stroke="#EB3737" />
+  </svg>
+</template>

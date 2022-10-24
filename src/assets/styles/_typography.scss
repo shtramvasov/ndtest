@@ -1,3 +1,5 @@
+@import '../styles/variables';
+
 //Fonts
 @font-face {
   font-family: 'FuturaPT';
@@ -20,7 +22,6 @@
 }
 
 // Typography 
-
 h1 {
   font-family: 'FuturaPT', sans-serif;
   font-size: 2.1875rem; // 35px
@@ -56,6 +57,31 @@ p {
   &.caption {
     font-size: 0.9375rem; // 15px
     line-height: 1.1875rem; // 19px  
+  }
+}
+
+.sorting {
+  cursor: pointer;
+  font-size: 0.9375rem; // 15px
+  line-height: 1.1875rem; // 19px  
+  color: $blue;
+  padding-bottom: 2px;
+  border-bottom: 1px $blue dashed;
+  transition: $transition;
+
+  &:hover {
+    color: $red;
+    border-bottom: 1px $red dashed;
+  }
+
+  &:active {
+    color: $red;
+    border-bottom: transparent;
+  }
+
+  &__active {
+    color: $dark;
+    border-bottom: transparent;
   }
 }
 
