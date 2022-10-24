@@ -2,22 +2,16 @@
   <section class="courses-page app-wrapper flex cols gap-30">
     <img src="@/assets/img/logo.svg" alt="Новый Диск" height="36" width="98">
     <h1 class="mobile-size dark--text">Каталог курсов</h1>
-    <label for="search">
-      <span>Поиск</span>
-      <input 
-        id="search" 
-        type="text" 
-        placeholder="Поиск по каталогу" 
-      />
-    </label>
+    <vSearch v-model="searchQuery" />
     <div class="flex cols gap-15">
       <div class="flex jcsb">
-        <p class="caption dark--text">{{ items.length }} результатов</p>
+        <p class="caption dark--text">{{ searchedItems.length }} результатов</p>
         <VSelect 
           :sortByPrice="this.sortByPrice"
           :sortByTitle="this.sortByTitle"
           :priceSorted="this.priceSorted"
           :titleSorted="this.titleSorted"
+          :windowWidth="this.windowWidth"
           @sortPrice="(desc) => {this.sortByPrice.desc = desc; this.priceSorted = true}"
           @sortTitle="(desc) => {this.sortByTitle.desc = desc; this.titleSorted = true}"
         />
@@ -34,7 +28,7 @@
         />
       </div>
       <PaginationBlock 
-        :items="items.length"
+        :items="searchedItems.length"
         :limit="this.limit"
         :currentPage="this.currentPage"
         @pageClick="(page) => this.currentPage = page"       
@@ -48,13 +42,15 @@ import Card from '@/components/Card.vue';
 import axios from 'axios';
 import PaginationBlock from '@/components/PaginationBlock.vue';
 import VSelect from '@/components/ui/vSelect.vue';
+import VSearch from '@/components/ui/vSearch.vue';
 
 export default {
   name: 'CoursesView',
   components: {
     Card,
     PaginationBlock,
-    VSelect
+    VSelect,
+    VSearch
 },
   mounted() {
     this.fetchData();
@@ -68,6 +64,7 @@ export default {
       windowWidth: window.innerWidth,
       priceSorted: false,
       titleSorted: false,
+      searchQuery: '',
       sortByPrice: { desc: false },
       sortByTitle: { desc: false },
     }
@@ -92,21 +89,27 @@ export default {
     },
   },
   computed: {
+    itemsHandler() {
+      return [...this.items];
+    },
     itemsPerPage() {
       let from = (this.currentPage - 1) * this.limit;
       let to = from + this.limit;
-      return this.items.slice(from, to);
+      return this.searchedItems.slice(from, to);
+    },
+    searchedItems() {
+      return this.itemsHandler.filter(item => item.title.toLowerCase().includes(this.searchQuery));
     },
   },
   watch: {
-    'sortByPrice.desc': function (){ 
+    'sortByPrice.desc': function() { 
       if(this.sortByPrice.desc) {
         this.items.sort((a, b) => a.cost > b.cost ? 1: -1);
       } else {
         this.items.sort((a, b) => a.cost > b.cost ? -1 : 1);
       }
     },
-    'sortByTitle.desc': function (){ 
+    'sortByTitle.desc': function() { 
       if(this.sortByTitle.desc) {
         this.items.sort((a, b) => a.title > b.title ? 1: -1);
       } else {

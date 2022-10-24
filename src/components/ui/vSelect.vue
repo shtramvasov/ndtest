@@ -1,6 +1,6 @@
 <template >
   <div class="sorting-container">
-    <p class="caption dark__middle--text flex gap-15">
+    <p v-show="this.windowWidth > 360" class="caption dark__middle--text flex gap-15">
       Сортировать по:
       <span class="sorting" :class="{'sorting__active' : priceSorted}" @click="sortPrice(!sortByPrice.desc)">
         Цене
@@ -17,6 +17,16 @@
         </i>
       </span>
     </p>
+    <p v-show="this.windowWidth < 360" class="caption dark__middle--text flex gap-12">
+      Сортировать по:
+      <span class="sorting" :class="{'sorting__active' : priceSorted}" @click="sortPrice(!sortByPrice.desc)">
+        Цене
+        <i v-show="priceSorted">
+          <VIconDown v-if="!sortByPrice.desc" />
+          <VIconUp v-if="sortByPrice.desc" />
+        </i>
+      </span>
+    </p>
   </div>
 </template>
 <script>
@@ -26,7 +36,7 @@ import VIconUp from './vIconUp.vue';
 export default {
   name: "vSelect",
   components: { VIconDown, VIconUp },
-  props: ['sortByPrice', 'sortByTitle', 'priceSorted', 'titleSorted'],
+  props: ['sortByPrice', 'sortByTitle', 'priceSorted', 'titleSorted', 'windowWidth'],
   methods: {
     sortPrice(desc) {
       this.$emit('sortPrice', desc);
